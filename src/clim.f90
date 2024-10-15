@@ -3,6 +3,7 @@ module clim
     use globals , only : kp, nx, ny, nz, time_ini, year_num, records_day, vars, var_number, input_file, output_file
     use BinIO   , only : finfo, fopen, fclose, fread, fwrite, get_record, reset_record
     use debugger, only : debug_open, debug_close, debug_write, debug_linebreak
+    use interp  , only : interp_linear_y
 
     implicit none
 
@@ -59,8 +60,10 @@ module clim
 
             mean(1:nx,1:ny,1:nz) = mean(1:nx,1:ny,1:nz) / real(year_num, kind=kp)
 
-            !call fwrite(ofile               , &  !! INOUT
-            !          & mean(1:nx,1:ny,1:nz)  )  !! IN
+            call interp_linear_y(mean(1:nx,1:ny,1:nz))  !! INOUT
+
+            call fwrite(ofile               , &  !! INOUT
+                      & mean(1:nx,1:ny,1:nz)  )  !! IN
 
             call reset_record(ifile                        , &  !! INOUT
                             & newrecord=initial_record+vars  )  !! IN

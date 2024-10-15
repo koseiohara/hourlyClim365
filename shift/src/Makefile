@@ -1,5 +1,5 @@
 EXE = EXE
-OBJS = BinIO.o globals.o interp.o namelist.o debugger.o clim.o main.o
+OBJS = BinIO.o globals.o namelist.o shifter.o main.o
 
 FC = ifort
 

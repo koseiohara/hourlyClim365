@@ -1,0 +1,19 @@
+&grid
+    nx = 1
+    ny = 145
+    nz = 1
+/
+
+&record
+    time_ini            = 1337
+    time_fin            = 45136
+    records_day         = 4
+    number_of_variables = 50
+    variable_number     = 32
+/
+
+&files
+    input_file  = '/mnt/jet11/kosei/mim/mim_modern/output/JRA55/JRA55_1990_2020_ALL_VINT_QFILTER.grd'
+    output_file = '../output/JRA55/JRA55_1990_2020_ALL_VINT_ttswr_qe_QFILTER.grd'
+/
+

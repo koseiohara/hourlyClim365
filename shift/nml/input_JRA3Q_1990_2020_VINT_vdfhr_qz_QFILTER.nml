@@ -1,0 +1,16 @@
+&grid
+    nx = 1
+    ny = 145
+    nz = 1
+/
+
+&record
+    yearend_record = 124
+    final_record   = 1460
+/
+
+&files
+    input_file  = '../../output/JRA3Q/JRA3Q_1990_2020_ALL_VINT_vdfhr_qz_QFILTER.grd'
+    output_file = '../output/JRA3Q/JRA3Q_1990_2020_ALL_VINT_SHIFT_vdfhr_qz_QFILTER.grd'
+/
+
