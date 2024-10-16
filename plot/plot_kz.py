@@ -7,40 +7,37 @@ from get_timeseries import get_datetime
 from set_input_file import set_input_file
 
 
-def az_mkgrph(figname, title, timestep, flag):
-    fig = plt.figure(figsize=[8,6])
+def kz_mkgrph(figname, title, timestep, dataset, ini, fin, flag):
+    fig = plt.figure(figsize=[6,3])
     ax = fig.add_subplot(111)
 
-    az_file = set_input_file('JRA3Q', 1990, 2020, 'VINT', 'az', flag, 'grd')
+    kz_file = set_input_file(dataset, ini, fin, 'VINT', 'kz', flag, 'grd')
 
-    GM, NH, SH, TR = plot_az_ax(ax=ax, filename=az_file, timestep=timestep, title=title)
+    GM, NH, SH = plot_kz_ax(ax=ax, filename=kz_file, timestep=timestep, title=title)
 
-    legend = ['Global', r'30$^\circ \mathrm{N}$-90$^\circ \mathrm{N}$', r'30$^\circ \mathrm{S}$-90$^\circ \mathrm{S}$', r'30$^\circ \mathrm{S}$-30$^\circ \mathrm{N}$']
-    fig.legend([GM, NH, SH, TR], legend, loc='upper center', bbox_to_anchor=[0.5, 0.02], ncol=4)
+    legend = ['Global', 'NH', 'SH']
+    fig.legend([GM, NH, SH], legend, loc='upper center', bbox_to_anchor=[0.5, 0.02], ncol=3)
 
     fig.savefig(figname, dpi=350, bbox_inches='tight')
 
-    print('')
     print('  >> ' + figname)
     print('')
 
 
-def plot_az_ax(ax, filename, timestep, title=''):
+def plot_kz_ax(ax, filename, timestep, title=''):
 
     ydigit = 1
     ymajorstep = 0.5
 
     date = get_datetime(leap=False, timestep=timestep)
 
-    total = get(filename, 'VINT', -90.,  90., timestep) * 1.E-6
-    north = get(filename, 'VINT',  30.,  90., timestep) * 1.E-6
-    south = get(filename, 'VINT', -90., -30., timestep) * 1.E-6
-    tropic= get(filename, 'VINT', -30.,  30., timestep) * 1.E-6
+    total = get(filename, 'VINT', -90., 90., timestep) * 1.E-6
+    north = get(filename, 'VINT',   0., 90., timestep) * 1.E-6
+    south = get(filename, 'VINT', -90.,  0., timestep) * 1.E-6
     
     GM, = ax.plot(date,  total, color='black' , alpha=0.7)
     NH, = ax.plot(date,  north, color='blue'  , alpha=0.7)
     SH, = ax.plot(date,  south, color='red'   , alpha=0.7)
-    TR, = ax.plot(date, tropic, color='orange', alpha=0.7)
 
     ax.set_xlim(xmin=date[0], xmax=date[-1])
     ax.set_ylim(ymin=0., ymax=4.)
@@ -55,11 +52,11 @@ def plot_az_ax(ax, filename, timestep, title=''):
 
     ax.grid(axis='both', which='major', linewidth=0.3)
     ax.grid(axis='both', which='minor', linewidth=0.1)
-    ax.tick_params(labelsize=10)
+    ax.tick_params(labelsize=13)
 
     if (title != ''):
-        ax.set_title(title, fontsize=10, y=0.97)
+        ax.set_title(title, fontsize=13, y=0.98, va='bottom')
 
-    return GM, NH, SH, TR
+    return GM, NH, SH
 
 

@@ -7,22 +7,22 @@ from get_timeseries import get_datetime
 from set_input_file import set_input_file
 
 
-def qz_mkgrph(figname, title, timestep, flag):
-    fig = plt.figure(figsize=[9,3])
+def qz_mkgrph(figname, title, timestep, dataset, ini, fin, flag):
+    fig = plt.figure(figsize=[9,3])      
     fig.subplots_adjust(wspace=0.25, hspace=0.6)
-    total = fig.add_subplot(231)
-    ttswr = fig.add_subplot(232)
-    ttlwr = fig.add_subplot(233)
+    total = fig.add_subplot(231)         
+    ttswr = fig.add_subplot(232)         
+    ttlwr = fig.add_subplot(233)         
     lrghr = fig.add_subplot(234)
     cnvhr = fig.add_subplot(235)
     vdfhr = fig.add_subplot(236)
 
-    total_file = set_input_file('JRA3Q', 1990, 2020, 'VINT',       'qz', flag, 'grd')
-    ttswr_file = set_input_file('JRA3Q', 1990, 2020, 'VINT', 'ttswr_qz', flag, 'grd')
-    ttlwr_file = set_input_file('JRA3Q', 1990, 2020, 'VINT', 'ttlwr_qz', flag, 'grd')
-    lrghr_file = set_input_file('JRA3Q', 1990, 2020, 'VINT', 'lrghr_qz', flag, 'grd')
-    cnvhr_file = set_input_file('JRA3Q', 1990, 2020, 'VINT', 'cnvhr_qz', flag, 'grd')
-    vdfhr_file = set_input_file('JRA3Q', 1990, 2020, 'VINT', 'vdfhr_qz', flag, 'grd')
+    total_file = set_input_file(dataset, ini, fin, 'VINT',       'qz', flag, 'grd')
+    ttswr_file = set_input_file(dataset, ini, fin, 'VINT', 'ttswr_qz', flag, 'grd')
+    ttlwr_file = set_input_file(dataset, ini, fin, 'VINT', 'ttlwr_qz', flag, 'grd')
+    lrghr_file = set_input_file(dataset, ini, fin, 'VINT', 'lrghr_qz', flag, 'grd')
+    cnvhr_file = set_input_file(dataset, ini, fin, 'VINT', 'cnvhr_qz', flag, 'grd')
+    vdfhr_file = set_input_file(dataset, ini, fin, 'VINT', 'vdfhr_qz', flag, 'grd')
 
     GM, NH, SH, TR = plot_qz_ax(ax=total, filename=total_file, timestep=timestep, title='Total'                   )
     plot_qz_ax(ax=ttswr, filename=ttswr_file, timestep=timestep, title='Short Wave Radiation'    )
@@ -37,7 +37,6 @@ def qz_mkgrph(figname, title, timestep, flag):
 
     fig.savefig(figname, dpi=350, bbox_inches='tight')
 
-    print('')
     print('  >> ' + figname)
     print('')
 
@@ -58,10 +57,15 @@ def plot_qz_ax(ax, filename, timestep, title=''):
     #GM = ax.plot(date, total, color='black', label='Global')
     #NH = ax.plot(date, north, color='blue' , label='NH'    )
     #SH = ax.plot(date, south, color='red'  , label='SH'    )
-    GM, = ax.plot(date,  total, color='black' , alpha=0.7)
-    NH, = ax.plot(date,  north, color='blue'  , alpha=0.7)
-    SH, = ax.plot(date,  south, color='red'   , alpha=0.7)
-    TR, = ax.plot(date, tropic, color='orange', alpha=0.7)
+    if (timestep == 'daily'):
+        alpha = 0.8
+    else:
+        alpha = 0.6
+
+    GM, = ax.plot(date,  total, color='black' , alpha=alpha)
+    NH, = ax.plot(date,  north, color='blue'  , alpha=alpha)
+    SH, = ax.plot(date,  south, color='red'   , alpha=alpha)
+    TR, = ax.plot(date, tropic, color='orange', alpha=alpha)
 
     ax.set_xlim(xmin=date[0], xmax=date[-1])
     ax.set_ylim(ymin=-6., ymax=6.)
