@@ -1,0 +1,19 @@
+&grid
+    nx = 1
+    ny = 145
+    nz = 45
+/
+
+&record
+    time_ini            = 1337
+    time_fin            = 64116
+    records_day         = 4
+    number_of_variables = 67
+    variable_number     = 52
+/
+
+&files
+    input_file  = '/mnt/jet11/kosei/mim/mim_modern/output/JRA3Q/JRA3Q_1980_2023_ALL_ZONAL_QFILTER.grd'
+    output_file = '../output/JRA3Q/JRA3Q_1980_2023_ALL_ZONAL_ttlwr_qe_QFILTER.grd'
+/
+

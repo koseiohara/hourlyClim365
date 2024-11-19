@@ -16,9 +16,9 @@ from plot_qz      import qz_mkgrph
 
 
 dataset = 'JRA3Q'
-ini  = 1990
-fin  = 2020
-timestep = 'hourly'
+ini  = 1980
+fin  = 2023
+timestep = 'daily'
 flag = ''
 
 
